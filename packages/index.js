@@ -1,5 +1,7 @@
 
 import Button from './button.vue'
+import './font/iconfont.js'
+import './font/index.css'
 
 const components = [
     Button,

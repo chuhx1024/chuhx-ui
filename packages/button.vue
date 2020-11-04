@@ -1,10 +1,17 @@
 <template>
-    <button class="hx-button" :class="[`hx-button--${type}`, {
-        'is-plain': plain,
-        'is-round': round,
-        'is-circle': circle,
-    }]">
-        <span>
+    <button
+        class="hx-button"
+        :class="[`hx-button--${type}`, {
+            'is-plain': plain,
+            'is-round': round,
+            'is-circle': circle,
+        }]"
+        @click="handelClick"
+    >
+        <svg v-if="icon" class="icon" aria-hidden="true">
+            <use :xlink:href="`#${icon}`"></use>
+        </svg>
+        <span v-if="$slots.default">
             <slot></slot>
         </span>
     </button>
@@ -12,33 +19,50 @@
 
 <script>
 export default {
-  name: 'HxButton',
-  props: {
-    type: {
-      default: '',
-      type: String
+    name: 'HxButton',
+    props: {
+        type: {
+            default: '',
+            type: String,
+        },
+        plain: {
+            default: false,
+            type: Boolean,
+        },
+        round: {
+            defualt: false,
+            type: Boolean,
+        },
+        circle: {
+            defualt: false,
+            type: Boolean,
+        },
+        icon: {
+            default: '',
+            type: String,
+        },
     },
-    plain: {
-      default: false,
-      type: Boolean
+    methods: {
+        handelClick (e) {
+            this.$emit('click', e)
+        },
     },
-    round: {
-      defualt: false,
-      type: Boolean
+    created () {
+        console.log(this.type)
+        console.log(this.$slots)
     },
-    circle: {
-      defualt: false,
-      type: Boolean
-    }
-  },
-  created () {
-    console.log(this.type)
-  }
 
 }
 </script>
 
 <style lang='scss' scoped>
+.hx-button {
+    .icon {
+        &+span {
+            padding-left: 5px;
+        }
+    }
+}
 .hx-button {
     display: inline-block;
     line-height: 1;
